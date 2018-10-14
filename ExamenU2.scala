@@ -55,7 +55,6 @@ val accuracy = evaluator.evaluate(predictions)
 println("Test Error = " + (1.0 - accuracy))
 
 /*D).Explique detalladamente la funcion matematica de entrenamiento que utilizo con sus propias palabras
-
 La función toma los valores y los pone en combinación lineal el cual al calcular entrena al modelo de prueba.
 
 E).Explique la funcion de error que utilizo para el resultado final
