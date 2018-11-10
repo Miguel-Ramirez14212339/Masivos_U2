@@ -10,8 +10,8 @@ import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
 
 val spark = SparkSession.builder.master("local[*]").getOrCreate()
-val df = spark.read.option("inferSchema","true").csv("Iris.csv").toDF("SepalLength","SepalWidth","PetalLength","PetalWidth","class")
 
+val df = spark.read.option("inferSchema","true").csv("Iris.csv").toDF("SepalLength","SepalWidth","PetalLength","PetalWidth","class")
 val n_col = when($"class".contains("Iris-setosa"), 1.0).otherwise(when($"class".contains("Iris-virginica"), 3.0).otherwise(2.0))
 val n_df = df.withColumn("n_tagger", n_col)
 n_df.select("n_tagger","SepalLength","SepalWidth","PetalLength","PetalWidth","class").show(150, false)
@@ -21,7 +21,7 @@ val features = assembler.transform(n_df)
 val assembler = new VectorAssembler().setInputCols(Array("SepalLength","SepalWidth","PetalLength","PetalWidth","n_tagger"))
 .setOutputCol("features")features.show(5)
 
-///Toma todos los datos de la columna indexada (label) que hay en el datset para incluirlos al index
+///Toma todos los datos de la columna indexada (label) que hay en el dataset para incluirlos al index
 val labelIndexer = new StringIndexer().setInputCol("class").setOutputCol("indexedLabel").fit(features)
 println(s"Found labels: ${labelIndexer.labels.mkString("[", ", ", "]")}")
 
